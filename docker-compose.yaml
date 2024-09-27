@@ -1,0 +1,67 @@
+services:
+  backend-api:
+    build:
+      context: ./backend/
+    container_name: kito-health-api
+    command: npm run dev
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - 1337:3000
+    depends_on:
+      - mongo
+    networks:
+      - kito-health
+
+  react-ui:
+    build:
+      context: ./frontend-react
+    container_name: kito-health-ui
+    command: npm run dev
+    stdin_open: true
+    volumes:
+      - ./frontend-react:/app
+      - /app/node_modules
+    ports:
+      - "4200:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+    networks:
+      - kito-health
+
+  mongo:
+    image: mongo:noble
+    restart: unless-stopped
+    container_name: kito-health-mongo
+    environment:
+      MONGO_INITDB_USERNAME: kito_health
+      MONGO_INITDB_PASSWORD: secret_Pass
+      MONGO_INITDB_DATABASE: kito_health_db
+    volumes:
+      - mongo-data:/var/lib/mongodb/data:rw
+      - ./mongodb-init.js:/docker-entrypoint-initdb.d/mongodb-init.js:rw
+    networks:
+      - kito-health
+
+  mongo-express:
+    image: mongo-express:1-20-alpine3.19
+    container_name: mongo_express
+    environment:
+      ME_CONFIG_MONGODB_AUTH_USERNAME: kito_health
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: secret_Pass
+      ME_CONFIG_MONGODB_ADMINUSERNAME: kito_health
+      ME_CONFIG_MONGODB_ADMINPASSWORD: secret_Pass
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+    networks:
+      - kito-health
+
+networks:
+  kito-health: 
+
+volumes:
+  mongo-data:

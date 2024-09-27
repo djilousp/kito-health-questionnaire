@@ -1,0 +1,32 @@
+{
+  "name": "@kito-health/backend",
+  "version": "1.0.0",
+  "main": "eslint.config.js",
+  "scripts": {
+    "test": "mocha --import=tsx --timeout 10000 test/**/*.spec.ts",
+    "dev": "NODE_ENV=dev ts-node-dev src/main.ts"
+  },
+  "author": "djilousp",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/chai": "^5.0.0",
+    "@types/config": "^3.3.5",
+    "@types/express": "^5.0.0",
+    "@types/mocha": "^10.0.8",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^22.7.3",
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "config": "^3.3.12",
+    "express": "^4.21.0",
+    "http-status-codes": "^2.3.0",
+    "mongoose": "^8.6.4",
+    "ts-toolbelt": "^9.6.0",
+    "zod": "^3.23.8"
+  }
+}
