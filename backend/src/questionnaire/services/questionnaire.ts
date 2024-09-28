@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { QuestionnaireError } from '../errors/questionnaire.errors';
 import {
   QuestionnaireCreateData,
@@ -6,6 +5,7 @@ import {
   QuestionnaireRepository,
 } from '../repositories/questionnaire';
 import { QuestionService } from './question';
+import { QuestionData } from '../repositories/question';
 
 type Config = {
   questionnaireRepository: QuestionnaireRepository;
@@ -42,22 +42,39 @@ export class QuestionnaireService {
     return questionnaire;
   }
 
-  async take(answersInput: AnswersAttempt): Promise<number> {
+  async take(answersInput: AnswersAttempt): Promise<{
+    correctlyAnsweredQuestions: QuestionData[];
+    wronglyAnsweredQuestions: QuestionData[];
+    score: number;
+  }> {
     const { questionnaireId, answers } = answersInput;
     const questionnaire = await this.findById(questionnaireId);
     const questions = await this.questionService.findAllByIdsList(
       questionnaire.questions
     );
 
-    const correctAnswers = [];
-    const incorrectAnswers = [];
-    const filteredAnswers = _.intersectionWith(
-      answersInput.answers,
-      questions,
-      (answer, question) => {
-        answer.questionId === question._id.toString();
+    const correctlyAnsweredQuestions: QuestionData[] = [];
+    const wronglyAnsweredQuestions: QuestionData[] = [];
+    let score = 0;
+    answers.map((answer) => {
+      const question = questions.find(
+        (question) => question._id.toString() === answer.questionId
+      );
+      if (question) {
+        const correctAnswer = question.answers.find((answr) => answr.isCorrect);
+        if (correctAnswer && correctAnswer._id.toString() === answer.answerId) {
+          correctlyAnsweredQuestions.push(question);
+          score += correctAnswer.weight;
+        } else {
+          wronglyAnsweredQuestions.push(question);
+        }
       }
-    );
-    return 0;
+    });
+
+    return {
+      correctlyAnsweredQuestions,
+      wronglyAnsweredQuestions,
+      score,
+    };
   }
 }

@@ -4,7 +4,7 @@
   "main": "eslint.config.js",
   "scripts": {
     "test": "mocha --import=tsx --timeout 10000 test/**/*.spec.ts",
-    "dev": "NODE_ENV=dev ts-node-dev src/main.ts"
+    "dev": "NODE_ENV=dev ts-node-dev src/server.ts"
   },
   "author": "djilousp",
   "license": "ISC",

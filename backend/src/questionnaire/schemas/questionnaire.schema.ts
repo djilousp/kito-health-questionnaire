@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { ObjectId } from 'mongodb';
+import { objectIdSchema } from './custom.schema';
 
 export const getQuestionnaireSchema = z.object({
-  params: z.object({ id: z.instanceof(ObjectId) }),
+  params: z.object({ id: objectIdSchema }),
 });
 
 export const createQuestionnaireSchema = z.object({
@@ -10,7 +10,7 @@ export const createQuestionnaireSchema = z.object({
     questionnaire: z.object({
       title: z.string(),
       description: z.string().optional(),
-      questionIds: z.array(z.instanceof(ObjectId)),
+      questions: z.array(objectIdSchema).min(1),
     }),
   }),
 });
@@ -19,8 +19,8 @@ export const takeQuestionnaireSchema = z.object({
   body: z.object({
     answers: z.array(
       z.object({
-        questionId: z.instanceof(ObjectId),
-        answerId: z.instanceof(ObjectId),
+        questionId: objectIdSchema,
+        answerId: objectIdSchema,
       })
     ),
   }),
