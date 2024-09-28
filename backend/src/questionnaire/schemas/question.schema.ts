@@ -7,13 +7,24 @@ export const bulkCreateQuestionsSchema = z.object({
       .array(
         z.object({
           prompt: z.string(),
-          answers: z.array(
-            z.object({
-              answerText: z.string(),
-              isCorrect: z.boolean(),
-              weight: z.enum(['1', '2', '3']).transform(Number),
-            })
-          ),
+          answers: z
+            .array(
+              z.object({
+                answerText: z.string(),
+                isCorrect: z.boolean(),
+                weight: z.enum(['1', '2', '3']).transform(Number),
+              })
+            )
+            .min(1)
+            .refine(
+              (answers) =>
+                answers.filter((answer) => answer.isCorrect).length === 1,
+              {
+                message:
+                  'There must be exactly one correct answer in the answers array',
+                path: ['isCorrect'],
+              }
+            ),
         })
       )
       .min(2),

@@ -16,6 +16,7 @@ export const createQuestionnaireSchema = z.object({
 });
 
 export const takeQuestionnaireSchema = z.object({
+  params: z.object({ id: objectIdSchema }),
   body: z.object({
     answers: z.array(
       z.object({

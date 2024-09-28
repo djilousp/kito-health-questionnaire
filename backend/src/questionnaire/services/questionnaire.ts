@@ -6,6 +6,7 @@ import {
 } from '../repositories/questionnaire';
 import { QuestionService } from './question';
 import { QuestionData } from '../repositories/question';
+import { safeToJson } from '../../helpers/safeToJson';
 
 type Config = {
   questionnaireRepository: QuestionnaireRepository;
@@ -43,8 +44,8 @@ export class QuestionnaireService {
   }
 
   async take(answersInput: AnswersAttempt): Promise<{
-    correctlyAnsweredQuestions: QuestionData[];
-    wronglyAnsweredQuestions: QuestionData[];
+    correctlyAnsweredQuestionsIds: string[];
+    wronglyAnsweredQuestionsIds: string[];
     score: number;
   }> {
     const { questionnaireId, answers } = answersInput;
@@ -72,8 +73,12 @@ export class QuestionnaireService {
     });
 
     return {
-      correctlyAnsweredQuestions,
-      wronglyAnsweredQuestions,
+      correctlyAnsweredQuestionsIds: safeToJson(correctlyAnsweredQuestions).map(
+        (q) => q._id.toString()
+      ),
+      wronglyAnsweredQuestionsIds: safeToJson(wronglyAnsweredQuestions).map(
+        (q) => q._id.toString()
+      ),
       score,
     };
   }

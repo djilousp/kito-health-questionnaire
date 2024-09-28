@@ -23,7 +23,7 @@ router.get(
 );
 
 router.post(
-  '/take_questionnaire',
+  '/:id/take',
   Validator(takeQuestionnaireSchema),
   tryCatch(questionnaireController.takeQuestionnaire)
 );

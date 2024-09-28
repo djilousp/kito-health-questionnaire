@@ -36,7 +36,10 @@ export const takeQuestionnaire = async function takeQuestionnaire(
   req: Request,
   res: Response
 ) {
-  const questionnaireResult = await questionnaireService.take(req.body.answers);
+  const questionnaireResult = await questionnaireService.take({
+    questionnaireId: req.params.id,
+    answers: req.body.answers,
+  });
 
-  res.status(200).json({ score: questionnaireResult });
+  res.status(200).json(questionnaireResult);
 };
