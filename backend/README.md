@@ -14,12 +14,12 @@ The base URL for all API requests is `/api`. You can interact with the following
 ## Table of Contents
 
 1. [Questionnaire Endpoints](#questionnaire-endpoints)
-   - [Create Questionnaire](#create-questionnaire)
-   - [Get Questionnaire](#get-questionnaire)
-   - [Take Questionnaire](#take-questionnaire)
+   - [Create Questionnaire](#1-create-questionnaire)
+   - [Get Questionnaire](#2-get-questionnaire)
+   - [Take Questionnaire](#3-take-questionnaire)
 2. [Question Endpoints](#question-endpoints)
-   - [Bulk Create Questions](#bulk-create-questions)
-   - [Get Questions](#get-questions)
+   - [Bulk Create Questions](#1-bulk-create-questions)
+   - [Get Questions](#2-get-questions)
 
 ---
 
