@@ -1,4 +1,4 @@
-import type { ObjectId } from 'mongoose';
+import * as _ from 'lodash';
 import { QuestionnaireError } from '../errors/questionnaire.errors';
 import {
   QuestionnaireCreateData,
@@ -13,10 +13,10 @@ type Config = {
 };
 
 type AnswersAttempt = {
-  questionnaireId: ObjectId;
+  questionnaireId: string;
   answers: {
-    questionId: ObjectId;
-    answerId: ObjectId;
+    questionId: string;
+    answerId: string;
   }[];
 };
 export class QuestionnaireService {
@@ -34,7 +34,7 @@ export class QuestionnaireService {
     return this.questionnaireRepository.create(questionnaireInput);
   }
 
-  async findById(id: string): Promise<any> {
+  async findById(id: string): Promise<QuestionnaireData> {
     const questionnaire = await this.questionnaireRepository.getById(id);
     if (!questionnaire) {
       throw QuestionnaireError.QuestionnaireNotFoundError.byId(id);
@@ -43,6 +43,21 @@ export class QuestionnaireService {
   }
 
   async take(answersInput: AnswersAttempt): Promise<number> {
+    const { questionnaireId, answers } = answersInput;
+    const questionnaire = await this.findById(questionnaireId);
+    const questions = await this.questionService.findAllByIdsList(
+      questionnaire.questions
+    );
+
+    const correctAnswers = [];
+    const incorrectAnswers = [];
+    const filteredAnswers = _.intersectionWith(
+      answersInput.answers,
+      questions,
+      (answer, question) => {
+        answer.questionId === question._id.toString();
+      }
+    );
     return 0;
   }
 }

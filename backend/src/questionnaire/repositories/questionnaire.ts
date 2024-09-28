@@ -1,12 +1,11 @@
 import { QuestionModel } from '../models/question';
-import type { ObjectId } from 'mongodb';
 import { InsertableDocument } from '../../helpers/types-helper';
 import { safeToJson } from '../../helpers/safeToJson';
 
 export type QuestionnaireData = {
-  _id: ObjectId;
+  _id: string;
   description?: string | null;
-  questions: ObjectId[];
+  questions: string[];
 };
 
 export type QuestionnaireCreateData = InsertableDocument<
