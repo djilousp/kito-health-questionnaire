@@ -52,11 +52,12 @@ Create a new questionnaire with a set of questions.
 ```json
 POST /api/questionnaires
 {
-"questionnaire": {
-"title": "General Knowledge Quiz",
-"description": "Test your general knowledge.",
-"questions": ["615f11ff16e63d6bca0b4a28", "615f120616e63d6bca0b4a29"]
-}
+"questionnaire":
+    {
+        "title": "General Knowledge Quiz",
+        "description": "Test your general knowledge.",
+        "questions": ["615f11ff16e63d6bca0b4a28", "615f120616e63d6bca0b4a29"]
+    }
 }
 ```
 
@@ -112,12 +113,12 @@ Submit answers for a given questionnaire.
 ```json
 POST /api/questionnaires/615f11ff16e63d6bca0b4a27/take
 {
-"answers": [
-{
-"questionId": "615f11ff16e63d6bca0b4a28",
-"answerId": "615f12ab16e63d6bca0b4a2a"
-}
-]
+    "answers": [
+        {
+            "questionId": "615f11ff16e63d6bca0b4a28",
+            "answerId": "615f12ab16e63d6bca0b4a2a"
+        }
+    ]
 }
 ```
 
@@ -162,15 +163,15 @@ Create multiple questions in one request.
 ```json
 POST /api/questions/bulk-create
 {
-"questions": [
-{
-"prompt": "What is the capital of France?",
-"answers": [
-{ "answerText": "Paris", "isCorrect": true, "weight": 1 },
-{ "answerText": "London", "isCorrect": false, "weight": 2 }
-]
-}
-]
+    "questions": [
+        {
+            "prompt": "What is the capital of France?",
+            "answers": [
+                { "answerText": "Paris", "isCorrect": true, "weight": 1 },
+                { "answerText": "London", "isCorrect": false, "weight": 2 }
+            ]
+        }
+    ]
 }
 ```
 
@@ -195,21 +196,3 @@ GET /api/questions?filter[ids]=615f11ff16e63d6bca0b4a28&limit=5&offset=0
 ```
 
 ---
-
-## Error Handling
-
-All endpoints follow consistent error handling. If validation fails, the API responds with a 400 status code and details about the validation error.
-
-#### Example Error Response:
-
-```json
-{
-  "error": "Invalid data",
-  "details": [
-    {
-      "message": "Invalid ObjectId",
-      "path": ["params", "id"]
-    }
-  ]
-}
-```
