@@ -10,6 +10,7 @@ export const Validator =
       await schema.parseAsync({
         body: req.body,
         params: req.params,
+        query: req.query,
       });
 
       next();

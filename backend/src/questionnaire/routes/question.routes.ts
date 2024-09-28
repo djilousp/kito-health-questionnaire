@@ -1,25 +1,24 @@
 import { Router } from 'express';
-import { questionnaireController } from '../controllers';
+import { questionController } from '../controllers';
 import { tryCatch } from '../../middlewares/utils/tryCatch';
 import { Validator } from '../../middlewares/validate';
 import {
-  createQuestionnaireSchema,
-  getQuestionnaireSchema,
-  takeQuestionnaireSchema,
-} from '../schemas/questionnaire.schema';
+  bulkCreateQuestionsSchema,
+  getQuestionsSchema,
+} from '../schemas/question.schema';
 
 const router = Router();
 
 router.post(
-  '/',
-  Validator(createQuestionnaireSchema),
-  tryCatch(questionnaireController.createQuestionnaire)
+  '/bulk-create',
+  Validator(bulkCreateQuestionsSchema),
+  tryCatch(questionController.bulkCreate)
 );
 
 router.get(
-  '/:id',
-  Validator(getQuestionnaireSchema),
-  tryCatch(questionnaireController.getQuestionnaire)
+  '/',
+  Validator(getQuestionsSchema),
+  tryCatch(questionController.getQuestions)
 );
 
 export default router;
