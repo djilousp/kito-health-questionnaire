@@ -1,6 +1,6 @@
-import { QuestionModel } from '../models/question';
 import { InsertableDocument } from '../../helpers/types-helper';
 import { safeToJson } from '../../helpers/safeToJson';
+import { QuestionnaireModel } from '../models/questionnaire';
 
 export type QuestionnaireData = {
   _id: string;
@@ -17,12 +17,14 @@ export class QuestionnaireRepository {
   async create(
     questionnaireInput: QuestionnaireCreateData
   ): Promise<QuestionnaireData> {
-    const questionnaire = await QuestionModel.insertMany([questionnaireInput]);
+    const questionnaire = await QuestionnaireModel.insertMany([
+      questionnaireInput,
+    ]);
     return safeToJson(questionnaire);
   }
 
   async getById(id: string): Promise<QuestionnaireData | null> {
-    const result = await QuestionModel.findById(id);
+    const result = await QuestionnaireModel.findById(id);
     return safeToJson(result);
   }
 }

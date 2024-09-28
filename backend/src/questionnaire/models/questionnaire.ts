@@ -10,9 +10,7 @@ interface Questionnaire extends Document {
 const QuestionnaireSchema = new Schema<Questionnaire>({
   title: { type: String, required: true },
   description: { type: String },
-  questions: [
-    { type: Schema.Types.ObjectId, ref: QuestionModel, required: true },
-  ],
+  questions: [{ type: Types.ObjectId, ref: QuestionModel, required: true }],
 });
 
 export const QuestionnaireModel = model<Questionnaire>(
