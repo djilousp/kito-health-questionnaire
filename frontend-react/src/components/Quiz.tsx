@@ -78,7 +78,7 @@ export const Quiz = () => {
   };
 
   return (
-    <section className="min-h-[80vh] m-auto">
+    <section className="min-h-[80vh]">
       {isLoading ? (
         <div className="h-full flex justify-center">
           <AiOutlineLoading3Quarters className="animate-spin" size={50} />

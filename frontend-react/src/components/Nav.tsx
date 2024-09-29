@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Nav() {
   return (
-    <nav className="col-span-2 flex justify-around">
+    <nav className="flex md:col-span-2 col-span-3 md:justify-around justify-between">
       <Link to="/start">
         <h1 className="px-8 py-2 hover:text-primary-text hover:shadow-lg font-bold text-lg text-accent">
           Start Again
