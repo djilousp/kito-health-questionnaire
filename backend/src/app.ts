@@ -1,8 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import questionnaireRoutes from './questionnaire/routes/questionnaire.routes';
 import questionRoutes from './questionnaire/routes/question.routes';
+
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

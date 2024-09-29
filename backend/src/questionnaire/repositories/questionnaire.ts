@@ -24,7 +24,16 @@ export class QuestionnaireRepository {
   }
 
   async getById(id: string): Promise<QuestionnaireData | null> {
-    const result = await QuestionnaireModel.findById(id);
-    return safeToJson(result);
+    const result = await QuestionnaireModel.findById(id).populate('questions');
+    const questionnaire = safeToJson(result);
+    const questions = questionnaire.questions.map((question) => {
+      const answersWithoutCorrectBool = question.answers.map((answer) => ({
+        _id: answer._id,
+        answerText: answer.answerText,
+      }));
+      return { ...question, answers: answersWithoutCorrectBool };
+    });
+    console.log('new shape of questions', questions);
+    return { ...questionnaire, questions };
   }
 }
